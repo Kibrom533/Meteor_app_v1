@@ -40,7 +40,7 @@ This project is an HTML/CSS/SQLite/Flask-based web application designed to proce
 
 ## Software and Libraries Used
 
-- VScode (python)
+- Python (VS Code editor)
 - Flask (Web Framework)
 - Pandas (Data Processing)
 - NumPy
