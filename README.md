@@ -9,7 +9,7 @@ This project is an HTML/CSS/SQLite/Flask-based web application designed to proce
 ## Project Objectives
 
 - To automate meteorological data cleaning and processing
-- To convert raw weather data into structured time series format
+- To convert raw weather data into a structured time series format
 - To generate complete daily calendars for each station
 - To store processed data in a database for further analysis
 - To enable easy download of processed data per station
@@ -19,8 +19,8 @@ This project is an HTML/CSS/SQLite/Flask-based web application designed to proce
 - Upload meteorological Excel or CSV files
 - Process rainfall data into a structured format
 - Handle multiple variables (e.g., PRECIP, TMPMAX, TMPMIN)
-- Generate full daily calendar for each station
-- Merge observed data with complete date range
+- Generate a full daily calendar for each station
+- Merge observed data with the complete date range
 - Store processed data in SQLite database (`meteo.db`)
 - Export station-wise data as ZIP files
 - Web-based user interface using Flask
@@ -35,7 +35,7 @@ This project is an HTML/CSS/SQLite/Flask-based web application designed to proce
 4. Data is transformed into long format (year, month, day, value)
 5. A full daily calendar is generated for each station
 6. Observed data is merged with the full calendar
-7. Processed data is stored in SQLite database
+7. Processed data is stored in a SQLite database
 8. Data can be exported per station as CSV files in ZIP format
 
 ## Software and Libraries Used
