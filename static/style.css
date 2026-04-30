@@ -1,4 +1,3 @@
-#Style.css
 body {
   font-family: Arial, sans-serif;
   background: linear-gradient(135deg, #74ebd5, #9face6);
@@ -6,21 +5,30 @@ body {
   padding: 40px;
 }
 
+/* =========================
+   MAIN CONTAINER
+========================= */
 .container {
   background: white;
   padding: 30px;
   border-radius: 15px;
-  width: 500px;
+  width: 600px;
   margin: auto;
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
-h2 {
+/* =========================
+   HEADINGS
+========================= */
+h2, h3 {
   text-align: center;
   color: #333;
 }
 
-input, button {
+/* =========================
+   INPUT FIELDS
+========================= */
+input, select {
   width: 100%;
   padding: 10px;
   margin-top: 8px;
@@ -28,8 +36,16 @@ input, button {
   border: 1px solid #ccc;
 }
 
+/* =========================
+   BUTTONS
+========================= */
 button {
-  background: #007bff;
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 8px;
+  border: none;
+  background: #f5cce3;
   color: white;
   font-weight: bold;
   cursor: pointer;
@@ -37,9 +53,12 @@ button {
 }
 
 button:hover {
-  background: #0056b3;
+  background: #7ad51e;
 }
 
+/* =========================
+   DOWNLOAD BUTTON STATES
+========================= */
 #downloadBtn {
   background: gray;
   cursor: not-allowed;
@@ -50,8 +69,51 @@ button:hover {
   cursor: pointer;
 }
 
+/* =========================
+   PROGRESS TEXT
+========================= */
 #progress {
   margin-top: 15px;
   font-weight: bold;
   text-align: center;
+}
+
+/* =========================
+   STATS TABLE (NEW)
+========================= */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+table th {
+  background: #d9ff00;
+  color: white;
+  padding: 10px;
+}
+
+table td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+table tr:nth-child(even) {
+  background: #f2f2f2;
+}
+
+/* =========================
+   RESULT PAGE BUTTON GROUPS
+========================= */
+a button {
+  margin-bottom: 10px;
+}
+
+/* =========================
+   MULTI-SELECT STYLE
+========================= */
+select[multiple] {
+  height: 120px;
 }

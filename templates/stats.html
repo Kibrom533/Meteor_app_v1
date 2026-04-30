@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Missing Data Statistics</title>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        background: #f4f6f9;
+      }
+
+      h2 {
+        text-align: center;
+        color: #2c3e50;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background: white;
+      }
+
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: center;
+      }
+
+      th {
+        background-color: #3498db;
+        color: white;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: auto;
+      }
+
+      .back {
+        margin-top: 20px;
+        text-align: center;
+      }
+
+      .back a {
+        text-decoration: none;
+        padding: 10px 15px;
+        background: #2ecc71;
+        color: white;
+        border-radius: 5px;
+      }
+
+      .back a:hover {
+        background: #27ae60;
+      }
+
+      .empty {
+        text-align: center;
+        color: red;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h2>📊 Missing Data Statistics</h2>
+
+      <!-- ========================= -->
+      <!-- TABLE -->
+      <!-- ========================= -->
+      {% if stats and stats|length > 0 %}
+
+      <table>
+        <tr>
+          <th>Station</th>
+          <th>Element</th>
+          <th>Total Records</th>
+          <th>Missing Values</th>
+          <th>Missing %</th>
+        </tr>
+
+        {% for row in stats %}
+        <tr>
+          <td>{{ row.Station }}</td>
+          <td>{{ row.Element }}</td>
+          <td>{{ row.Total_Records }}</td>
+          <td>{{ row.Missing_Values }}</td>
+          <td>{{ row.Missing_Percent }}%</td>
+        </tr>
+        {% endfor %}
+      </table>
+
+      {% else %}
+      <p class="empty">⚠ No statistics available. Please upload data first.</p>
+      {% endif %}
+
+      <!-- ========================= -->
+      <!-- BACK BUTTON (FIXED) -->
+      <!-- ========================= -->
+      <!--<div class="back">-->
+      <!-- <a href="javascript:history.back()">⬅ Back</a>-->
+      <!--</div>-->
+    </div>
+  </body>
+</html>

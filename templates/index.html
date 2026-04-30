@@ -1,8 +1,8 @@
-##index.html
 <!doctype html>
 <html>
   <head>
     <title>Meteorological System</title>
+
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
@@ -11,8 +11,11 @@
 
   <body>
     <div class="container">
-      <h2>Upload Meteorological Data</h2>
+      <h2>🌦️ Upload Meteorological Data</h2>
 
+      <!-- ========================= -->
+      <!-- UPLOAD FORM -->
+      <!-- ========================= -->
       <form action="/upload" method="POST" enctype="multipart/form-data">
         <label>Select File:</label>
         <input type="file" name="file" required />
@@ -28,18 +31,21 @@
         <label>End Year:</label>
         <input type="number" name="end_year" placeholder="e.g. 2020" required />
 
-        <button type="submit">Upload & Process</button>
+        <button type="submit">🚀 Upload & Process</button>
       </form>
 
+      <!-- ========================= -->
+      <!-- PROGRESS -->
+      <!-- ========================= -->
       <p id="progress">Waiting for upload...</p>
-
-      <button id="downloadBtn" disabled>Download ZIP</button>
     </div>
 
+    <!-- ========================= -->
+    <!-- PROGRESS SCRIPT -->
+    <!-- ========================= -->
     <script>
       const form = document.querySelector("form");
       const progress = document.getElementById("progress");
-      const btn = document.getElementById("downloadBtn");
 
       form.addEventListener("submit", () => {
         let p = 0;
@@ -54,9 +60,7 @@
 
         setTimeout(() => {
           clearInterval(interval);
-          progress.innerText = "Finalizing 100%";
-          btn.disabled = false;
-          btn.classList.add("active");
+          progress.innerText = "Finalizing 100%...";
         }, 5000);
       });
     </script>

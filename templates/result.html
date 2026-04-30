@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Processing Complete</title>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        background: #f4f6f9;
+      }
+
+      .container {
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        max-width: 750px;
+        margin: auto;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      h2,
+      h3 {
+        text-align: center;
+      }
+
+      .section {
+        margin-top: 25px;
+      }
+
+      button {
+        padding: 12px;
+        margin-top: 10px;
+        width: 100%;
+        background: #826cf1;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      button:hover {
+        background: #0056b3;
+      }
+
+      select,
+      .dropdown {
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+      }
+
+      .multi-select {
+        height: 180px;
+      }
+
+      .note {
+        font-size: 12px;
+        color: gray;
+        margin-top: 5px;
+      }
+
+      .divider {
+        margin-top: 30px;
+        border-top: 1px solid #ddd;
+        padding-top: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h2>✅ Processing Completed Successfully</h2>
+
+      <p style="text-align: center">Select next action:</p>
+
+      <!-- ========================= -->
+      <!-- STATS -->
+      <!-- ========================= -->
+      <div class="section">
+        <a href="/stats" target="_blank">
+          <button>📊 Missing Data Statistics</button>
+        </a>
+      </div>
+
+      <!-- ========================= -->
+      <!-- ZIP DOWNLOAD -->
+      <!-- ========================= -->
+      <div class="section">
+        <a href="/download_zip" target="_blank">
+          <button>📦 Download ZIP</button>
+        </a>
+      </div>
+
+      <!-- ========================= -->
+      <!-- PLOT SECTION -->
+      <!-- ========================= -->
+      <div class="section divider">
+        <h3>📈 Station Time Series Plot</h3>
+
+        {% if station_list and station_list|length > 0 %}
+
+        <form action="/plot" method="GET" target="_blank">
+          <!-- SELECT STATIONS -->
+          <label><strong>Select Station(s):</strong></label>
+          <select name="stations" multiple required class="multi-select">
+            {% for s in station_list %}
+            <option value="{{ s }}">{{ s }}</option>
+            {% endfor %}
+          </select>
+
+          <p class="note">
+            Hold CTRL (Windows) or CMD (Mac) to select multiple stations
+          </p>
+
+          <!-- 🔥 NEW: SELECT ELEMENT -->
+          <label><strong>Select Variable:</strong></label>
+          <select name="element" class="dropdown" required>
+            <option value="PRECIP">Precipitation (mm/day)</option>
+            <option value="TMPMAX">Max Temperature (°C)</option>
+            <option value="TMPMIN">Min Temperature (°C)</option>
+          </select>
+
+          <!-- SUBMIT -->
+          <button type="submit">📈 Generate Plot</button>
+        </form>
+
+        {% else %}
+        <p style="color: red; text-align: center">
+          ⚠ No stations available. Please upload valid data.
+        </p>
+        {% endif %}
+      </div>
+    </div>
+  </body>
+</html>

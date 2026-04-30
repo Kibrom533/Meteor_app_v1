@@ -1,15 +1,20 @@
-# app.py
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, send_file, Response
 import sqlite3
-from processor import process_data, export_zip
+import pandas as pd
+import plotly.express as px
+
+from processor import process_data, export_zip, compute_missing_statistics
 
 app = Flask(__name__)
 
 DB_NAME = "meteo.db"
 
+# store processed dataset globally
+processed_df = None
+
 
 # =========================
-# INIT DB
+# INIT DATABASE
 # =========================
 def init_db():
     conn = sqlite3.connect(DB_NAME)
@@ -38,45 +43,177 @@ init_db()
 
 
 # =========================
-# ROUTES
+# HOME PAGE
 # =========================
 @app.route("/")
 def home():
     return render_template("index.html")
 
 
+# =========================
+# UPLOAD + PROCESS
+# =========================
 @app.route("/upload", methods=["POST"])
 def upload():
 
-    file = request.files["file"]
+    global processed_df
 
-    if file.filename == "":
-        return "No file selected"
+    file = request.files.get("file")
 
-    start_year = int(request.form["start_year"])
-    end_year = int(request.form["end_year"])
+    if not file or file.filename == "":
+        return "❌ No file selected"
 
-    df = process_data(file, start_year, end_year)
+    start_year = int(request.form.get("start_year"))
+    end_year = int(request.form.get("end_year"))
 
-    return f"""
-    <h3>✅ Processing Complete</h3>
-    <p>Years: {start_year} - {end_year}</p>
-    <p>Rows: {len(df)}</p>
-    <a href="/download_zip">Download ZIP per station</a>
-    """
+    processed_df = process_data(file, start_year, end_year)
+
+    station_list = sorted(processed_df["NAME"].dropna().unique())
+
+    return render_template(
+        "result.html",
+        station_list=station_list
+    )
 
 
+# =========================
+# STATISTICS
+# =========================
+@app.route("/stats")
+def stats():
+
+    if processed_df is None:
+        return "❌ No data processed"
+
+    stats_df = compute_missing_statistics(processed_df)
+
+    return render_template(
+        "stats.html",
+        stats=stats_df.to_dict(orient="records")
+    )
+
+
+# =========================
+# ZIP DOWNLOAD
+# =========================
 @app.route("/download_zip")
 def download_zip():
-    zip_buffer = export_zip()
+
+    if processed_df is None:
+        return "❌ No data processed"
 
     return send_file(
-        zip_buffer,
+        export_zip(),
         as_attachment=True,
         download_name="stations_data.zip",
         mimetype="application/zip"
     )
 
 
+# =========================
+# 📈 PLOT (DAILY + GAPS + MULTI-STATION)
+# =========================
+@app.route("/plot", methods=["GET"])
+def plot_station():
+
+    global processed_df
+
+    if processed_df is None:
+        return "❌ No data processed"
+
+    stations = request.args.getlist("stations")
+    element = request.args.get("element")
+
+    if not stations:
+        return "❌ No station selected"
+
+    if not element:
+        return "❌ No element selected"
+
+    df = processed_df.copy()
+
+    # =========================
+    # FILTER DATA
+    # =========================
+    df = df[
+        (df["NAME"].isin(stations)) &
+        (df["Element"] == element)
+    ]
+
+    if df.empty:
+        return "❌ No data found for selection"
+
+    # =========================
+    # CREATE DAILY DATE
+    # =========================
+    df["date"] = pd.to_datetime(
+        df["year"].astype(str) + "-" +
+        df["month"].astype(str) + "-" +
+        df["day"].astype(str),
+        errors="coerce"
+    )
+
+    # keep missing values (IMPORTANT for gaps)
+    df_daily = df.dropna(subset=["date"])
+
+    # sort properly
+    df_daily = df_daily.sort_values(["NAME", "date"])
+
+    # =========================
+    # Y-AXIS LABEL
+    # =========================
+    if element == "PRECIP":
+        y_label = "Precipitation (mm/day)"
+    else:
+        y_label = "Temperature (°C)"
+
+    # =========================
+    # PLOT
+    # =========================
+    fig = px.line(
+        df_daily,
+        x="date",
+        y="Value",
+        color="NAME",
+        title=f"{element} Daily Time Series",
+        labels={
+            "Value": y_label,
+            "date": "Day/Year"
+        }
+    )
+
+    # 🔥 CRITICAL: DO NOT CONNECT MISSING VALUES
+    fig.update_traces(connectgaps=False)
+
+    # =========================
+    # JOURNAL STYLE
+    # =========================
+    fig.update_layout(
+        template="simple_white",
+        title_x=0.5,
+        hovermode="x unified",
+        font=dict(family="Arial", size=12)
+    )
+
+    fig.update_xaxes(
+        showline=True,
+        linewidth=1,
+        linecolor="black",
+        mirror=True
+    )
+
+    fig.update_yaxes(
+        showline=True,
+        linewidth=1,
+        linecolor="black",
+        mirror=True
+    )
+
+    return Response(fig.to_html(full_html=True), mimetype="text/html")
+
+
+# =========================
+# RUN
+# =========================
 if __name__ == "__main__":
     app.run(debug=True, use_reloader=False)
