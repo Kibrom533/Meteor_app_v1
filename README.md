@@ -1,6 +1,6 @@
 # FInal project:Software and programming II (by Kiril Kuzmin (PhD))
 
-# Meteorological Data Processing Web Application (meteor_app_v1)
+# Meteorological Data Processing Web-Application (meteor_app_v1)
 
 ## Project Overview
 
@@ -38,7 +38,7 @@ This project is an HTML/CSS/SQLite/Flask-based web application designed to proce
 7. Processed data is stored in SQLite database
 8. Data can be exported per station as CSV files in ZIP format
 
-## Technologies Used
+## Software and Libraries Used
 
 - VScode (python)
 - Flask (Web Framework)
