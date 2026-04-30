@@ -1,4 +1,4 @@
-# FInal project:Software and programming II (by Kiril Kuzmin (PhD))
+# FInal project:Software & programming II (by Kiril Kuzmin (PhD))
 
 # Meteorological Data Processing Web-Application (meteor_app_v1)
 
