@@ -1,5 +1,17 @@
-# processor.py
+"""# processor.py
+This handles all the data processing work behind the scenes.It takes the uploaded meteorological
+data (from Excel or CSV files) and reads it into a pandas DataFrame. Then it cleans the data by 
+converting columns like year, month, and day into proper numeric formats and filtering the dataset
+based on the selected year range. After that,it reshapes the data from a wide format (where days 
+are columns) into a long format (where each row represents a single day and its rainfall value). 
+This makes the data easier to analyze and store.The file also creates a complete daily calendar 
+for each station, ensuring that all possible dates are included even if some rainfall values are 
+missing. It then merges the real observed data with this full calendar so that missing values are 
+represented properly.
 
+Finally, it saves the processed data into an SQLite database (meteo.db) and also prepares
+the data for export by station in ZIP format. In short, it transforms raw weather data into a clean, 
+structured, and usable and better way for analysis format."""
 import pandas as pd
 import sqlite3
 import numpy as np
