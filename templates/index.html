@@ -1,0 +1,64 @@
+##index.html
+<!doctype html>
+<html>
+  <head>
+    <title>Meteorological System</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+
+  <body>
+    <div class="container">
+      <h2>Upload Meteorological Data</h2>
+
+      <form action="/upload" method="POST" enctype="multipart/form-data">
+        <label>Select File:</label>
+        <input type="file" name="file" required />
+
+        <label>Start Year:</label>
+        <input
+          type="number"
+          name="start_year"
+          placeholder="e.g. 1981"
+          required
+        />
+
+        <label>End Year:</label>
+        <input type="number" name="end_year" placeholder="e.g. 2020" required />
+
+        <button type="submit">Upload & Process</button>
+      </form>
+
+      <p id="progress">Waiting for upload...</p>
+
+      <button id="downloadBtn" disabled>Download ZIP</button>
+    </div>
+
+    <script>
+      const form = document.querySelector("form");
+      const progress = document.getElementById("progress");
+      const btn = document.getElementById("downloadBtn");
+
+      form.addEventListener("submit", () => {
+        let p = 0;
+        progress.innerText = "Processing 0%";
+
+        let interval = setInterval(() => {
+          p += 10;
+          if (p <= 90) {
+            progress.innerText = "Processing " + p + "%";
+          }
+        }, 400);
+
+        setTimeout(() => {
+          clearInterval(interval);
+          progress.innerText = "Finalizing 100%";
+          btn.disabled = false;
+          btn.classList.add("active");
+        }, 5000);
+      });
+    </script>
+  </body>
+</html>
