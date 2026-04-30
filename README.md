@@ -1,10 +1,10 @@
-# FInal project:Software and programming II (student name : Kibrom Hadush Welyargis)
+# FInal project:Software and programming II (by Kiril Kuzmin (PhD))
 
 # Meteorological Data Processing Web Application (meteor_app_v1)
 
 ## Project Overview
 
-This project is an HTML/CSS/SQLite/Flask-based web application designed to process meteorological rainfall data. It allows users to upload Excel or CSV files containing station-based weather data, processes the data into a structured format, generates a complete daily calendar for each station, and stores the processed results in a SQLite database. The application also supports exporting the processed data as station-wise CSV files in a ZIP format.
+This project is an HTML/CSS/SQLite/Flask-based web application designed to process meteorological rainfall data (Only for Ethiopian meteorological data format containing weather variables such as precipitation, Tmax, Tmin, etc.). It allows users to upload Excel or CSV files containing station-based weather data, processes the data into a structured format, generates a complete daily calendar for each station, and stores the processed results in a SQLite database. The application also supports exporting the processed data as station-wise CSV files in a ZIP format.
 
 ## Project Objectives
 
