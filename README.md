@@ -28,7 +28,7 @@ This project is an HTML/CSS/SQLite/Flask-based web application designed to proce
 ## How to Run the Application and How the System Works
 
 1. Run the Flask application(in Vscode): python app.py
-   Then open any browser and visit: http://127.0.0.1:5000/
+   and then open any browser and visit: http://127.0.0.1:5000/
 
 2. User uploads meteorological data file (Excel/CSV)
 3. The system reads and cleans the data
