@@ -9,8 +9,8 @@ This project is an HTML/CSS/SQLite/Flask-based web application developed to addr
 ## Project Objectives
 
 - To quantify the percentage of missing values and enable easy access to processed data for analysis
-  -To convert raw row-based weather data into a structured daily time-series format
-  -To store, visualize, and enable easy download of processed data for further analysis
+- To convert raw row-based weather data into a structured daily time-series format
+- To store, visualize, and enable easy download of processed data for further analysis
 
 ## Features
 
