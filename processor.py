@@ -19,29 +19,23 @@ import numpy as np
 import zipfile
 from io import BytesIO
 
-# =========================================================
-# DATABASE NAME
 # This is the SQLite database where processed data is stored
-# =========================================================
 DB_NAME = "meteo.db"
 
-
-# =========================================================
 # CLASS: RainfallProcessor
 # This class handles saving and exporting data from database
-# =========================================================
+
+
 class RainfallProcessor:
 
     def __init__(self, db_name):
         self.db_name = db_name
 
-    # -----------------------------------------------------
-    # SAVE DATA INTO SQLITE DATABASE
-    # -----------------------------------------------------
+    # Here saving the data base into SQLite database
     def save(self, df):
         conn = sqlite3.connect(self.db_name)
 
-        # We split data into chunks to avoid SQLite limit errors
+        # I split data into chunks to avoid SQLite limit errors
         chunk_size = 200
 
         for i in range(0, len(df), chunk_size):
@@ -55,9 +49,7 @@ class RainfallProcessor:
 
         conn.close()
 
-    # -----------------------------------------------------
-    # EXPORT DATA FROM DATABASE
-    # -----------------------------------------------------
+    # The next step is exporting data from database
     def export(self):
         conn = sqlite3.connect(self.db_name)
 
@@ -71,22 +63,19 @@ class RainfallProcessor:
 processor = RainfallProcessor(DB_NAME)
 
 
-# =========================================================
-# MONTH DAYS DICTIONARY
-# Used to validate correct number of days per month
-# =========================================================
+# Month days dictionary created that used to validate correct number of days per month
+
 month_days = {
     1: 31, 2: 28, 3: 31, 4: 30, 5: 31, 6: 30,
     7: 31, 8: 31, 9: 30, 10: 31, 11: 30, 12: 31
 }
 
-
-# =========================================================
-# FUNCTION: CREATE FULL CALENDAR
-# Purpose:
+# Now I have created function: Create the callander
+# The Purpose is:
 #   Ensures all station-year-month-day combinations exist
 #   even if data is missing (important for gap detection)
-# =========================================================
+
+
 def create_full_calendar(df, start_year, end_year):
 
     # Extract unique station metadata
@@ -136,11 +125,9 @@ def create_full_calendar(df, start_year, end_year):
     return df_full
 
 
-# =========================================================
-# FUNCTION: PROCESS RAW FILE
-# Purpose:
-#   Convert raw meteorological file into structured format
-# =========================================================
+# Next cerate a funtion: Process ra files
+# The Purpose:
+# Convert raw meteorological file into structured format
 def process_data(file, start_year, end_year):
 
     # Read file depending on type
@@ -214,9 +201,7 @@ def process_data(file, start_year, end_year):
         df_final["Value"] = df_final["Value_real"]
         df_final.drop(columns=["Value_real"], inplace=True)
 
-    # =====================================================
-    # DATA ORDERING (IMPORTANT FOR ANALYSIS)
-    # =====================================================
+    # Data ordering (important for analysis)
     element_order = {
         "PRECIP": 0,
         "TMPMAX": 1,
@@ -238,11 +223,9 @@ def process_data(file, start_year, end_year):
     return df_final
 
 
-# =========================================================
-# FUNCTION: EXPORT DATA AS ZIP
-# Purpose:
-#   Download station-wise CSV files
-# =========================================================
+# Again sunction here: export data as ZIP
+# Purpose is to download station wise csv files
+
 def export_zip():
 
     df = processor.export()
@@ -262,11 +245,9 @@ def export_zip():
     return zip_buffer
 
 
-# =========================================================
-# FUNCTION: MISSING DATA STATISTICS
+# Finly a function for missind data analysis
 # Purpose:
 #   Calculate missing values per station & element
-# =========================================================
 def compute_missing_statistics(df):
 
     stats = []

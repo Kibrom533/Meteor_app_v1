@@ -1,3 +1,7 @@
+# This code uses the flask web application backend that lets users upload meteorological data,
+# processes and stores it, then provides features to view missing-data statistics,
+#  download results as a ZIP, and generate interactive time-series plots for selected
+# stations and variables.
 from flask import Flask, render_template, request, send_file, Response
 import sqlite3
 import pandas as pd
@@ -13,9 +17,6 @@ DB_NAME = "meteo.db"
 processed_df = None
 
 
-# =========================
-# INIT DATABASE
-# =========================
 def init_db():
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
@@ -42,17 +43,13 @@ def init_db():
 init_db()
 
 
-# =========================
-# HOME PAGE
-# =========================
+# Home page
 @app.route("/")
 def home():
     return render_template("index.html")
 
 
-# =========================
-# UPLOAD + PROCESS
-# =========================
+# upload and process
 @app.route("/upload", methods=["POST"])
 def upload():
 
@@ -76,14 +73,12 @@ def upload():
     )
 
 
-# =========================
-# STATISTICS
-# =========================
+# Statistics
 @app.route("/stats")
 def stats():
 
     if processed_df is None:
-        return "❌ No data processed"
+        return " No data processed"
 
     stats_df = compute_missing_statistics(processed_df)
 
@@ -93,14 +88,12 @@ def stats():
     )
 
 
-# =========================
-# ZIP DOWNLOAD
-# =========================
+# Zip download
 @app.route("/download_zip")
 def download_zip():
 
     if processed_df is None:
-        return "❌ No data processed"
+        return "No data processed"
 
     return send_file(
         export_zip(),
@@ -110,42 +103,36 @@ def download_zip():
     )
 
 
-# =========================
-# 📈 PLOT (DAILY + GAPS + MULTI-STATION)
-# =========================
+# plolty
 @app.route("/plot", methods=["GET"])
 def plot_station():
 
     global processed_df
 
     if processed_df is None:
-        return "❌ No data processed"
+        return "No data processed"
 
     stations = request.args.getlist("stations")
     element = request.args.get("element")
 
     if not stations:
-        return "❌ No station selected"
+        return " No station selected"
 
     if not element:
-        return "❌ No element selected"
+        return "No element selected"
 
     df = processed_df.copy()
 
-    # =========================
-    # FILTER DATA
-    # =========================
+    # Filter data
     df = df[
         (df["NAME"].isin(stations)) &
         (df["Element"] == element)
     ]
 
     if df.empty:
-        return "❌ No data found for selection"
+        return " No data found for selection"
 
-    # =========================
-    # CREATE DAILY DATE
-    # =========================
+    # Create the daily data
     df["date"] = pd.to_datetime(
         df["year"].astype(str) + "-" +
         df["month"].astype(str) + "-" +
@@ -159,17 +146,13 @@ def plot_station():
     # sort properly
     df_daily = df_daily.sort_values(["NAME", "date"])
 
-    # =========================
-    # Y-AXIS LABEL
-    # =========================
+    # Y axis label
     if element == "PRECIP":
         y_label = "Precipitation (mm/day)"
     else:
         y_label = "Temperature (°C)"
 
-    # =========================
-    # PLOT
-    # =========================
+    # plotting
     fig = px.line(
         df_daily,
         x="date",
@@ -182,12 +165,8 @@ def plot_station():
         }
     )
 
-    # 🔥 CRITICAL: DO NOT CONNECT MISSING VALUES
     fig.update_traces(connectgaps=False)
 
-    # =========================
-    # JOURNAL STYLE
-    # =========================
     fig.update_layout(
         template="simple_white",
         title_x=0.5,
@@ -212,8 +191,5 @@ def plot_station():
     return Response(fig.to_html(full_html=True), mimetype="text/html")
 
 
-# =========================
-# RUN
-# =========================
 if __name__ == "__main__":
     app.run(debug=True, use_reloader=False)

@@ -1,3 +1,4 @@
+/*tyle.css*/
 body {
   font-family: Arial, sans-serif;
   background: linear-gradient(135deg, #74ebd5, #9face6);
@@ -5,9 +6,7 @@ body {
   padding: 40px;
 }
 
-/* =========================
-   MAIN CONTAINER
-========================= */
+/* main container */
 .container {
   background: white;
   padding: 30px;
@@ -17,17 +16,13 @@ body {
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
-/* =========================
-   HEADINGS
-========================= */
+/* Headings */
 h2, h3 {
   text-align: center;
   color: #333;
 }
 
-/* =========================
-   INPUT FIELDS
-========================= */
+/* Input fields */
 input, select {
   width: 100%;
   padding: 10px;
@@ -36,9 +31,7 @@ input, select {
   border: 1px solid #ccc;
 }
 
-/* =========================
-   BUTTONS
-========================= */
+/* Buttons */
 button {
   width: 100%;
   padding: 10px;
@@ -56,9 +49,7 @@ button:hover {
   background: #7ad51e;
 }
 
-/* =========================
-   DOWNLOAD BUTTON STATES
-========================= */
+/* Download button states */
 #downloadBtn {
   background: gray;
   cursor: not-allowed;
@@ -69,18 +60,14 @@ button:hover {
   cursor: pointer;
 }
 
-/* =========================
-   PROGRESS TEXT
-========================= */
+/* progress text*/
 #progress {
   margin-top: 15px;
   font-weight: bold;
   text-align: center;
 }
 
-/* =========================
-   STATS TABLE (NEW)
-========================= */
+/* States table */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -104,16 +91,12 @@ table tr:nth-child(even) {
   background: #f2f2f2;
 }
 
-/* =========================
-   RESULT PAGE BUTTON GROUPS
-========================= */
+/*  Results page button groups*/
 a button {
   margin-bottom: 10px;
 }
 
-/* =========================
-   MULTI-SELECT STYLE
-========================= */
+/* Multi select style*/
 select[multiple] {
   height: 120px;
 }

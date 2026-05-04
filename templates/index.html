@@ -1,4 +1,5 @@
-<!doctype html>
+<!--This index.html creates a webpage where users can upload a meteorological data 
+file with a year range and see a simulated progress indicator while the file is being processed.-->
 <html>
   <head>
     <title>Meteorological System</title>
@@ -11,11 +12,10 @@
 
   <body>
     <div class="container">
-      <h2>🌦️ Upload Meteorological Data</h2>
+      <h2>Upload Meteorological Data</h2>
 
-      <!-- ========================= -->
-      <!-- UPLOAD FORM -->
-      <!-- ========================= -->
+      <!-- uploading the file-->
+
       <form action="/upload" method="POST" enctype="multipart/form-data">
         <label>Select File:</label>
         <input type="file" name="file" required />
@@ -31,18 +31,14 @@
         <label>End Year:</label>
         <input type="number" name="end_year" placeholder="e.g. 2020" required />
 
-        <button type="submit">🚀 Upload & Process</button>
+        <button type="submit">Upload & Process</button>
       </form>
 
-      <!-- ========================= -->
-      <!-- PROGRESS -->
-      <!-- ========================= -->
+      <!--Progress  the upload-->
+
       <p id="progress">Waiting for upload...</p>
     </div>
 
-    <!-- ========================= -->
-    <!-- PROGRESS SCRIPT -->
-    <!-- ========================= -->
     <script>
       const form = document.querySelector("form");
       const progress = document.getElementById("progress");

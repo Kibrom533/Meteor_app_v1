@@ -1,3 +1,5 @@
+<!--This html code  lets users explore and download processed data 
+and generate plots based on selected stations and variables.-->
 <!doctype html>
 <html>
   <head>
@@ -73,38 +75,33 @@
 
   <body>
     <div class="container">
-      <h2>✅ Processing Completed Successfully</h2>
+      <h2>Processing Completed Successfully</h2>
 
-      <p style="text-align: center">Select next action:</p>
+      <p style="text-align: center">Now,select next action:</p>
 
-      <!-- ========================= -->
-      <!-- STATS -->
-      <!-- ========================= -->
+      <!-- stastics-->
+
       <div class="section">
         <a href="/stats" target="_blank">
           <button>📊 Missing Data Statistics</button>
         </a>
       </div>
 
-      <!-- ========================= -->
-      <!-- ZIP DOWNLOAD -->
-      <!-- ========================= -->
+      <!-- ZIP download -->
       <div class="section">
         <a href="/download_zip" target="_blank">
           <button>📦 Download ZIP</button>
         </a>
       </div>
 
-      <!-- ========================= -->
-      <!-- PLOT SECTION -->
-      <!-- ========================= -->
+      <!-- ploting-->
       <div class="section divider">
         <h3>📈 Station Time Series Plot</h3>
 
         {% if station_list and station_list|length > 0 %}
 
         <form action="/plot" method="GET" target="_blank">
-          <!-- SELECT STATIONS -->
+          <!-- station selection-->
           <label><strong>Select Station(s):</strong></label>
           <select name="stations" multiple required class="multi-select">
             {% for s in station_list %}
@@ -116,7 +113,7 @@
             Hold CTRL (Windows) or CMD (Mac) to select multiple stations
           </p>
 
-          <!-- 🔥 NEW: SELECT ELEMENT -->
+          <!-- tyle/element selection-->
           <label><strong>Select Variable:</strong></label>
           <select name="element" class="dropdown" required>
             <option value="PRECIP">Precipitation (mm/day)</option>
@@ -124,7 +121,7 @@
             <option value="TMPMIN">Min Temperature (°C)</option>
           </select>
 
-          <!-- SUBMIT -->
+          <!-- plot generating-->
           <button type="submit">📈 Generate Plot</button>
         </form>
 
