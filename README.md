@@ -4,15 +4,13 @@
 
 ## Project Overview
 
-This project is an HTML/CSS/SQLite/Flask-based web application designed to process meteorological rainfall data (Only for Ethiopian meteorological data format containing weather variables such as precipitation, Tmax, Tmin, etc.). It allows users to upload Excel or CSV files containing station-based weather data, processes the data into a structured format, generates a complete daily calendar for each station, and stores the processed results in a SQLite database. The application also supports exporting the processed data as station-wise CSV files in a ZIP format.
+This project is an HTML/CSS/SQLite/Flask-based web application developed to address a critical gap in handling meteorological data in Ethiopia. Data from the Ethiopian Meteorological Institute (EMI) is typically stored in a row-based format that is not structured for analysis, making it difficult and time-consuming for researchers to use. Tasks such as reformatting data, selecting reliable stations, calculating missing values, and performing quality control can take up to 6 hours per station for long-term datasets resulting in several days of manual work for multiple stations. This inefficiency creates a clear need for an automated solution. To bridge this gap, the system allows users to upload Excel or CSV files containing station-based weather variables such as precipitation, Tmax, and Tmin, automatically transforms the raw data into a clean daily time-series format, handles missing data and quality issues, provides visualization tools, and enables easy export of processed data significantly improving efficiency and usability for meteorological research in Ethiopia.
 
 ## Project Objectives
 
-- To automate meteorological data cleaning and processing
-- To convert raw weather data into a structured time series format
-- To generate complete daily calendars for each station
-- To store processed data in a database for further analysis
-- To enable easy download of processed data per station
+- To quantify the percentage of missing values and enable easy access to processed data for analysis
+  -To convert raw row-based weather data into a structured daily time-series format
+  -To store, visualize, and enable easy download of processed data for further analysis
 
 ## Features
 
